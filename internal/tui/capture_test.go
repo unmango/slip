@@ -14,7 +14,7 @@ import (
 func typed(t *testing.T, body string, final tea.KeyPressMsg) (tui.Model, tea.Cmd) {
 	t.Helper()
 
-	var m tea.Model = tui.New("202609081412", "fleeting", "/notes/202609081412.md")
+	var m tea.Model = tui.New("202609081412", "fleeting", "/notes/202609081412.md", nil)
 
 	m, _ = m.Update(tea.WindowSizeMsg{Width: 80, Height: 24})
 
@@ -97,7 +97,7 @@ func TestEmptyCapture(t *testing.T) {
 }
 
 func TestViewShowsHeader(t *testing.T) {
-	var m tea.Model = tui.New("202609081412", "fleeting", "/notes/202609081412.md")
+	var m tea.Model = tui.New("202609081412", "fleeting", "/notes/202609081412.md", nil)
 	m, _ = m.Update(tea.WindowSizeMsg{Width: 80, Height: 24})
 
 	view := m.(tui.Model).View().Content
@@ -111,7 +111,7 @@ func TestViewShowsHeader(t *testing.T) {
 // The terminal's background decides the palette, so a light answer must reach
 // the textarea rather than falling through to it as an ordinary message.
 func TestBackgroundColorRestyles(t *testing.T) {
-	var m tea.Model = tui.New("202609081412", "fleeting", "/notes/202609081412.md")
+	var m tea.Model = tui.New("202609081412", "fleeting", "/notes/202609081412.md", nil)
 	m, _ = m.Update(tea.WindowSizeMsg{Width: 80, Height: 24})
 
 	dark := m.(tui.Model).View().Content

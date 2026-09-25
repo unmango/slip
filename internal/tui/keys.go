@@ -7,6 +7,10 @@ import "charm.land/bubbles/v2/key"
 type keyMap struct {
 	Save    key.Binding
 	Discard key.Binding
+
+	// Link is disabled when there is nothing to link to, which hides it from
+	// help as well as from matching.
+	Link key.Binding
 }
 
 var keys = keyMap{
@@ -19,12 +23,55 @@ var keys = keyMap{
 		key.WithKeys("ctrl+c", "esc"),
 		key.WithHelp("ctrl+c", "discard"),
 	),
+	Link: key.NewBinding(
+		key.WithKeys("ctrl+l"),
+		key.WithHelp("ctrl+l", "link"),
+	),
 }
 
 func (k keyMap) ShortHelp() []key.Binding {
-	return []key.Binding{k.Save, k.Discard}
+	return []key.Binding{k.Save, k.Discard, k.Link}
 }
 
 func (k keyMap) FullHelp() [][]key.Binding {
+	return [][]key.Binding{k.ShortHelp()}
+}
+
+// pickerKeyMap is the link picker's bindings. Cancel shares its keys with
+// Discard on purpose: while the picker is open they close the picker, never
+// the note.
+type pickerKeyMap struct {
+	Accept key.Binding
+	Cancel key.Binding
+	Next   key.Binding
+	Prev   key.Binding
+}
+
+var pickerKeys = pickerKeyMap{
+	Accept: key.NewBinding(
+		key.WithKeys("enter"),
+		key.WithHelp("enter", "insert"),
+	),
+	Cancel: key.NewBinding(
+		key.WithKeys("esc", "ctrl+c"),
+		key.WithHelp("esc", "cancel"),
+	),
+	// fzf's default layout puts the best match at the bottom, so the next
+	// match is up.
+	Next: key.NewBinding(
+		key.WithKeys("up", "ctrl+p"),
+		key.WithHelp("↑", "next"),
+	),
+	Prev: key.NewBinding(
+		key.WithKeys("down", "ctrl+n"),
+		key.WithHelp("↓", "prev"),
+	),
+}
+
+func (k pickerKeyMap) ShortHelp() []key.Binding {
+	return []key.Binding{k.Accept, k.Cancel, k.Next, k.Prev}
+}
+
+func (k pickerKeyMap) FullHelp() [][]key.Binding {
 	return [][]key.Binding{k.ShortHelp()}
 }
