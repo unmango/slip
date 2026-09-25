@@ -135,5 +135,6 @@ The body is stored **verbatim**. The title is derived from the first line, never
 Output-only proto fields are never written by capture: `uid`, `update_time`, `delete_time`, `last_edited_time`, and every count. They belong to whatever serves the resource, and the counts come from `zk list` / `zk graph`.
 
 `internal/tui` never touches the filesystem. It returns a `Result` and the caller writes. That is what makes it testable without a terminal, so keep it that way.
+The link picker's notes arrive through a `tui.LinkSource` the caller supplies, which is where `zk list` runs, so the screen itself starts no subprocess either.
 
 The owned surface is deliberately small, because everything in it shadows zk. A command name `slip` claims is a zk command it hides, and a flag it registers on the root command is a zk global flag it hides. `passthru.Owns` decides ownership by looking the leading option up in `cli.Flags()`, so registering a new root flag silently takes that name away from zk; `internal/passthru/passthru_test.go` pins the zk options that must keep passing through.

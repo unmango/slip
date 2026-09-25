@@ -40,8 +40,12 @@ func Resolve(fsys afero.Fs, cwd, flagDir string) (Config, error) {
 		return Config{Dir: dir, Notebook: ok && root == dir}, nil
 	}
 
+	// $ZK_NOTEBOOK_DIR is taken on trust as the destination, but zk will not
+	// read it until it has been initialised, so only a marker makes it a
+	// notebook.
 	if dir, ok := notebook.Dir(fsys, cwd); ok {
-		return Config{Dir: dir, Notebook: true}, nil
+		root, found := notebook.Find(fsys, dir)
+		return Config{Dir: dir, Notebook: found && root == dir}, nil
 	}
 
 	dir, err := dataDir()

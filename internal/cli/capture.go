@@ -1,9 +1,12 @@
 package cli
 
 import (
+	"cmp"
+	"context"
 	"fmt"
 	"io"
 	"os"
+	"slices"
 	"strings"
 	"time"
 
@@ -13,6 +16,7 @@ import (
 	"github.com/UnstoppableMango/zettelkasten/internal/note"
 	"github.com/UnstoppableMango/zettelkasten/internal/store"
 	"github.com/UnstoppableMango/zettelkasten/internal/tui"
+	"github.com/UnstoppableMango/zettelkasten/internal/zk"
 	"github.com/spf13/afero"
 	"github.com/spf13/cobra"
 )
@@ -129,8 +133,13 @@ func runTUI(cfg config.Config, noteType notev1.NoteType) (string, bool, error) {
 	id := note.ZettelID(time.Now())
 	path := store.New(afero.NewOsFs(), cfg.Dir).Path(id)
 
+	var links tui.LinkSource
+	if cfg.Notebook {
+		links = notebookLinks(cfg.Dir)
+	}
+
 	model, err := tea.NewProgram(
-		tui.New(id, shortNoteType(noteType), path),
+		tui.New(id, shortNoteType(noteType), path, links),
 	).Run()
 	if err != nil {
 		return "", false, fmt.Errorf("running the capture screen: %w", err)
@@ -139,6 +148,32 @@ func runTUI(cfg config.Config, noteType notev1.NoteType) (string, bool, error) {
 	result := model.(tui.Model).Result()
 
 	return result.Body, result.Saved, nil
+}
+
+// notebookLinks lists dir's notes through zk, most recently modified first,
+// since the note being linked to is usually one written lately.
+func notebookLinks(dir string) tui.LinkSource {
+	return func() ([]tui.Link, error) {
+		notes, err := zk.List(context.Background(), dir)
+		if err != nil {
+			return nil, err
+		}
+
+		slices.SortStableFunc(notes, func(a, b zk.Note) int {
+			return b.Modified.Compare(a.Modified)
+		})
+
+		links := make([]tui.Link, len(notes))
+		for i, n := range notes {
+			links[i] = tui.Link{
+				ID:    cmp.Or(n.ZettelID(), n.FilenameStem),
+				Title: n.Title,
+				Text:  n.Link,
+			}
+		}
+
+		return links, nil
+	}
 }
 
 // stdinIsPiped reports whether stdin is something other than a terminal, which
