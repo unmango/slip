@@ -39,10 +39,18 @@ func TestResolvePrecedence(t *testing.T) {
 		},
 		"notebook env wins over walk-up": {
 			env:      map[string]string{notebook.EnvDir: "/notebook-env", "XDG_DATA_HOME": "/xdg"},
-			markers:  []string{"/cwd/.zk"},
+			markers:  []string{"/cwd/.zk", "/notebook-env/.zk"},
 			cwd:      "/cwd",
 			want:     "/notebook-env",
 			notebook: true,
+		},
+		// zk refuses a ZK_NOTEBOOK_DIR it has not initialised, so notes still
+		// go there but nothing may assume zk can read it.
+		"notebook env without a marker is not a notebook": {
+			env:     map[string]string{notebook.EnvDir: "/notebook-env", "XDG_DATA_HOME": "/xdg"},
+			markers: []string{"/cwd/.zk"},
+			cwd:     "/cwd",
+			want:    "/notebook-env",
 		},
 		"notebook wins over xdg": {
 			env:      map[string]string{"XDG_DATA_HOME": "/xdg"},
