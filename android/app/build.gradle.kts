@@ -1,26 +1,31 @@
+// Imported rather than written out below, because `java` on its own resolves to
+// Gradle's own java extension and not to the package.
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
 }
 
+// The SDK levels live beside this file rather than in it, because the flake
+// reads them too: nix/shells/android.nix composes exactly these platforms and
+// build tools, and AGP responds to a missing one by trying to install it into
+// the read-only nix store.
+val sdk =
+    Properties().apply {
+        rootProject.file("sdk-versions.properties").inputStream().use { load(it) }
+    }
+
 android {
     namespace = "dev.unmango.slip"
-    compileSdk = 35
-
-    // Pinned because AGP otherwise asks for whichever build tools it was built
-    // against and tries to install them, which fails against a read-only SDK
-    // out of the nix store. The flake composes this version.
-    buildToolsVersion = "35.0.0"
+    compileSdk = sdk.getProperty("compileSdk").toInt()
+    buildToolsVersion = sdk.getProperty("buildTools")
 
     defaultConfig {
         applicationId = "dev.unmango.slip"
-
-        // Matches the -androidapi the flake pins for gomobile. The .aar is
-        // compiled against that NDK sysroot, so a lower minSdk here would link
-        // against symbols the device does not have.
-        minSdk = 24
-        targetSdk = 35
+        minSdk = sdk.getProperty("minSdk").toInt()
+        targetSdk = sdk.getProperty("targetSdk").toInt()
         versionCode = 1
         versionName = "0.1.0"
 

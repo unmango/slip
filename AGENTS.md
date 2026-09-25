@@ -80,9 +80,12 @@ Without that argument `PublishTest` skips rather than fails, so a bare `gradle c
 It is 37M of compiled Go reproduced by `make bind` from the source beside it, so `make apk` needs a bind first.
 Both Makefile targets declare that, but an IDE building `android/` on its own will not.
 
-**Three numbers in `android/app/build.gradle.kts` are pinned to the flake.**
+**`android/sdk-versions.properties` holds every SDK level, and four things read it.**
+`nix/shells/android.nix` composes the platforms and build tools named there, `android/app/build.gradle.kts` parses it with `java.util.Properties`, the Makefile greps `minSdk` out of it for `-androidapi`, and `emulator-test.sh` falls back to `compileSdk` for its system image.
+It is a properties file because Gradle parses it with nothing but the JDK, and the Nix side reads it rather than the reverse so that an IDE building `android/` alone still gets the right numbers.
+Change a level there and nowhere else.
 `minSdk` must equal the `-androidapi` gomobile bound against, because the archive is compiled for that NDK sysroot and a lower `minSdk` links against symbols the device will not have.
-`compileSdk` and `buildToolsVersion` must be platforms the flake composes, because AGP responds to a missing one by trying to install it, and the SDK is read-only in the nix store.
+`compileSdk` and `buildTools` must be platforms the flake composes, because AGP responds to a missing one by trying to install it, and the SDK is read-only in the nix store.
 
 **The APK is split per ABI, so there is no `app-debug.apk`.**
 The bulk of this app is `libgojni.so`, and a universal build carries four copies of the Go runtime where three can never run.
@@ -104,7 +107,7 @@ Delete it and the next `make bind` fails with "no required module provides packa
 
 **`-androidapi` has to match the SDK platform the dev shell pins.**
 gomobile compiles against `platforms/android-<androidapi>` and refuses to run when it is absent, and it will not infer the level from what is installed.
-The flake pins 24 and the Makefile passes 24; changing one without the other breaks the bind.
+Both the flake and the Makefile take it from `minSdk` in `android/sdk-versions.properties`, so there is one number to change.
 The NDK accepts 21 through 35, so the default of 16 fails outright.
 
 **The Android SDK is unfree and its licence has to be accepted at evaluation time.**

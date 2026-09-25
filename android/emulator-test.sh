@@ -13,7 +13,7 @@
 set -euo pipefail
 
 sdk="${SLIP_EMULATOR_SDK:?not set; run inside nix develop .#android}"
-api="${SLIP_ANDROID_API:-35}"
+api="${SLIP_ANDROID_API:-$(sed -n 's/^compileSdk=//p' sdk-versions.properties)}"
 
 # Gradle needs the build SDK, which is the one with the platform and build
 # tools the app compiles against. avdmanager and the emulator need the other

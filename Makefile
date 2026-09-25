@@ -8,10 +8,13 @@ generate:
 	nix run .#generate
 
 # The Android archive the capture app links against. -androidapi has to match
-# the SDK platform the dev shell pins, and gomobile will not infer it.
+# the SDK platform the dev shell pins, and gomobile will not infer it, so it
+# comes from the same file the shell and the app read.
+ANDROID_API := $(shell sed -n 's/^minSdk=//p' android/sdk-versions.properties)
+
 bind: mobile/slip.aar
 mobile/slip.aar: $(shell find internal mobile -name '*.go')
-	gomobile bind -target=android -androidapi 24 -o $@ ./mobile
+	gomobile bind -target=android -androidapi $(ANDROID_API) -o $@ ./mobile
 
 # The capture app, around the archive above. There is no gradle wrapper: the
 # dev shell pins gradle, so a wrapper would add a checked-in binary and a second

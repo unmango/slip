@@ -8,19 +8,34 @@
   gradle,
   inputsFrom ? [ ],
   jdk17,
+  lib,
   mkShellNoCC,
 }:
 let
-  # gomobile compiles against the SDK platform matching its -androidapi and
-  # refuses to run when that platform is absent, so the oldest Android the app
-  # supports is pinned here rather than left to whichever platform the SDK
-  # happens to ship. The NDK accepts 21 through 35; 24 is the floor that still
-  # reaches ordinary phones.
-  #
-  # Both levels are the app's too: android/app/build.gradle.kts sets minSdk to
-  # the first and compileSdk to the second.
-  androidApi = "24";
-  androidCompileApi = "35";
+  # The levels come from android/sdk-versions.properties so that this shell and
+  # the app agree by construction. gomobile compiles against the SDK platform
+  # matching its -androidapi and refuses to run when that platform is absent,
+  # and AGP responds to a missing compileSdk by trying to install it into the
+  # read-only store, so composing anything but what the app asks for breaks a
+  # build rather than a shell.
+  sdk =
+    let
+      lines = lib.filter (l: l != "" && !lib.hasPrefix "#" l) (
+        lib.splitString "\n" (builtins.readFile ../../android/sdk-versions.properties)
+      );
+    in
+    lib.listToAttrs (
+      map (
+        l:
+        let
+          parts = lib.splitString "=" l;
+        in
+        lib.nameValuePair (lib.head parts) (lib.concatStringsSep "=" (lib.tail parts))
+      ) lines
+    );
+
+  androidApi = sdk.minSdk;
+  androidCompileApi = sdk.compileSdk;
 
   androidBuild = androidenv.composeAndroidPackages {
     includeNDK = true;
@@ -28,7 +43,7 @@ let
       androidApi
       androidCompileApi
     ];
-    buildToolsVersions = [ "35.0.0" ];
+    buildToolsVersions = [ sdk.buildTools ];
   };
 
   # composeAndroidPackages fetches a system image for every platform in
