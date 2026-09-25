@@ -2,17 +2,23 @@ package tui
 
 import (
 	"fmt"
-	"slices"
 	"strings"
 
-	"charm.land/bubbles/v2/textinput"
 	tea "charm.land/bubbletea/v2"
 	"charm.land/lipgloss/v2"
 	"github.com/sahilm/fuzzy"
 )
 
-// pickerChrome is the count line and the prompt under the results.
-const pickerChrome = 2
+const (
+	// popupRows is how many matches the popup shows at once.
+	popupRows = 8
+
+	// popupMinWidth and popupMaxWidth bound the popup's inner width, so a
+	// short title does not make a sliver and a long one does not cover the
+	// note.
+	popupMinWidth = 24
+	popupMaxWidth = 60
+)
 
 var (
 	matchStyle    = lipgloss.NewStyle().Foreground(lipgloss.Color("2")).Bold(true)
@@ -20,6 +26,7 @@ var (
 	selectedStyle = lipgloss.NewStyle().Bold(true)
 	idStyle       = lipgloss.NewStyle().Faint(true)
 	errorStyle    = lipgloss.NewStyle().Foreground(lipgloss.Color("1"))
+	popupStyle    = lipgloss.NewStyle().Border(lipgloss.RoundedBorder()).BorderForeground(lipgloss.Color("8"))
 )
 
 // linksLoadedMsg carries what a LinkSource produced.
@@ -42,24 +49,15 @@ type candidates []Link
 func (c candidates) String(i int) string { return c[i].Title + " " + c[i].ID }
 func (c candidates) Len() int            { return len(c) }
 
-// picker is a fuzzy finder over notes, laid out the way fzf lays itself out by
-// default: the prompt at the bottom and the best match directly above it.
+// picker is a fuzzy finder over notes. It holds no text of its own: the query
+// is whatever the person has typed into the note since the picker opened.
 type picker struct {
-	query   textinput.Model
 	links   candidates
 	matches fuzzy.Matches
+	query   string
 	cursor  int
-	width   int
-	height  int
 	loaded  bool
 	err     error
-}
-
-func newPicker() picker {
-	q := textinput.New()
-	q.Prompt = "> "
-
-	return picker{query: q}
 }
 
 func (p *picker) setLinks(links []Link, err error) {
@@ -67,25 +65,9 @@ func (p *picker) setLinks(links []Link, err error) {
 	p.filter()
 }
 
-func (p *picker) setSize(width, height int) {
-	p.width, p.height = width, height
-	p.query.SetWidth(max(width-lipgloss.Width(p.query.Prompt)-1, 1))
-}
-
-func (p *picker) setStyles(isDark bool) {
-	p.query.SetStyles(textinput.DefaultStyles(isDark))
-}
-
-// open starts a fresh search.
-func (p *picker) open() tea.Cmd {
-	p.query.Reset()
+func (p *picker) setQuery(q string) {
+	p.query = q
 	p.filter()
-
-	return p.query.Focus()
-}
-
-func (p *picker) close() {
-	p.query.Blur()
 }
 
 // selected is the link under the cursor, if anything matched.
@@ -97,23 +79,9 @@ func (p picker) selected() (Link, bool) {
 	return p.links[p.matches[p.cursor].Index], true
 }
 
-// move steps through the matches; positive is toward worse matches, which is
-// up the screen.
+// move steps through the matches; positive is toward worse matches.
 func (p *picker) move(delta int) {
 	p.cursor = max(min(p.cursor+delta, len(p.matches)-1), 0)
-}
-
-func (p picker) Update(msg tea.Msg) (picker, tea.Cmd) {
-	before := p.query.Value()
-
-	var cmd tea.Cmd
-	p.query, cmd = p.query.Update(msg)
-
-	if p.query.Value() != before {
-		p.filter()
-	}
-
-	return p, cmd
 }
 
 // filter reruns the query. An empty query keeps every note in the order the
@@ -121,8 +89,8 @@ func (p picker) Update(msg tea.Msg) (picker, tea.Cmd) {
 func (p *picker) filter() {
 	p.cursor = 0
 
-	if q := p.query.Value(); q != "" {
-		p.matches = fuzzy.FindFrom(q, p.links)
+	if p.query != "" {
+		p.matches = fuzzy.FindFrom(p.query, p.links)
 		return
 	}
 
@@ -132,23 +100,34 @@ func (p *picker) filter() {
 	}
 }
 
-func (p picker) View() string {
-	rows := max(p.height-pickerChrome, 0)
-
+// View renders the popup, best match first, no wider than maxWidth including
+// its border.
+func (p picker) View(maxWidth int) string {
 	// Scroll just far enough to keep the cursor on screen.
-	offset := max(p.cursor-rows+1, 0)
-	visible := p.matches[min(offset, len(p.matches)):min(offset+rows, len(p.matches))]
+	offset := max(p.cursor-popupRows+1, 0)
+	visible := p.matches[min(offset, len(p.matches)):min(offset+popupRows, len(p.matches))]
 
-	lines := make([]string, 0, p.height)
-	for range rows - len(visible) {
-		lines = append(lines, "")
-	}
-
-	for i, m := range slices.Backward(visible) {
+	lines := make([]string, 0, len(visible)+1)
+	for i, m := range visible {
 		lines = append(lines, p.row(m, offset+i == p.cursor))
 	}
 
-	return strings.Join(append(lines, p.status(), p.query.View()), "\n")
+	lines = append(lines, p.status())
+
+	inner := popupMinWidth
+	for _, l := range lines {
+		inner = max(inner, lipgloss.Width(l))
+	}
+
+	inner = max(min(inner, popupMaxWidth, maxWidth-2), 1)
+
+	truncate := lipgloss.NewStyle().MaxWidth(inner)
+	for i, l := range lines {
+		l = truncate.Render(l)
+		lines[i] = l + strings.Repeat(" ", max(inner-lipgloss.Width(l), 0))
+	}
+
+	return popupStyle.Render(strings.Join(lines, "\n"))
 }
 
 func (p picker) status() string {
@@ -220,9 +199,5 @@ func (p picker) row(m fuzzy.Match, selected bool) string {
 
 	flush()
 
-	if p.width <= 0 {
-		return b.String()
-	}
-
-	return lipgloss.NewStyle().MaxWidth(p.width).Render(b.String())
+	return b.String()
 }

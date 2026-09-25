@@ -56,15 +56,13 @@ var pickerKeys = pickerKeyMap{
 		key.WithKeys("esc", "ctrl+c"),
 		key.WithHelp("esc", "cancel"),
 	),
-	// fzf's default layout puts the best match at the bottom, so the next
-	// match is up.
 	Next: key.NewBinding(
-		key.WithKeys("up", "ctrl+p"),
-		key.WithHelp("↑", "next"),
+		key.WithKeys("down", "ctrl+n"),
+		key.WithHelp("↓", "next"),
 	),
 	Prev: key.NewBinding(
-		key.WithKeys("down", "ctrl+n"),
-		key.WithHelp("↓", "prev"),
+		key.WithKeys("up", "ctrl+p"),
+		key.WithHelp("↑", "prev"),
 	),
 }
 

@@ -2,6 +2,7 @@ package tui_test
 
 import (
 	"errors"
+	"regexp"
 	"strings"
 	"testing"
 
@@ -21,7 +22,9 @@ var (
 	ctrlS  = tea.KeyPressMsg{Code: 's', Mod: tea.ModCtrl}
 	enter  = tea.KeyPressMsg{Code: tea.KeyEnter}
 	escape = tea.KeyPressMsg{Code: tea.KeyEscape}
-	up     = tea.KeyPressMsg{Code: tea.KeyUp}
+	down   = tea.KeyPressMsg{Code: tea.KeyDown}
+	left   = tea.KeyPressMsg{Code: tea.KeyLeft}
+	bksp   = tea.KeyPressMsg{Code: tea.KeyBackspace}
 )
 
 func fixed(links []tui.Link, err error) tui.LinkSource {
@@ -122,7 +125,7 @@ func TestCtrlLInsertsAtTheCursor(t *testing.T) {
 func TestPickerMovesToTheNextMatch(t *testing.T) {
 	m := started(t, fixed(notes, nil))
 
-	m, _ = press(m, "", ctrlL, up, enter)
+	m, _ = press(m, "", ctrlL, down, enter)
 
 	if got, want := body(m), "[[202609090106]]"; got != want {
 		t.Errorf("Body = %q, want %q", got, want)
@@ -167,20 +170,22 @@ func TestCancellingThePickerKeepsTheNote(t *testing.T) {
 	}
 }
 
-func TestSaveIsSwallowedWhileThePickerIsOpen(t *testing.T) {
+// The query is ordinary note text, so saving mid-search keeps what was typed.
+func TestSaveWhileThePickerIsOpen(t *testing.T) {
 	m := started(t, fixed(notes, nil))
 
-	m, cmd := press(m, "", ctrlL, ctrlS)
+	m, cmd := press(m, "see [[int", ctrlS)
 
-	if cmd != nil {
-		if _, ok := cmd().(tea.QuitMsg); ok {
-			t.Fatal("ctrl+s in the picker quit the capture screen")
-		}
+	got := m.(tui.Model).Result()
+	if !got.Saved {
+		t.Error("Saved = false, want true")
 	}
 
-	if m.(tui.Model).Result().Saved {
-		t.Error("Saved = true, want false")
+	if want := "see [[int"; got.Body != want {
+		t.Errorf("Body = %q, want %q", got.Body, want)
 	}
+
+	assertQuits(t, cmd)
 }
 
 func TestPickerShowsMatches(t *testing.T) {
@@ -289,6 +294,119 @@ func TestMovingPastBracketsDoesNotOpenThePicker(t *testing.T) {
 	m, _ = press(m, "y")
 
 	if got, want := body(m), "[[yx"; got != want {
+		t.Errorf("Body = %q, want %q", got, want)
+	}
+}
+
+var escapes = regexp.MustCompile(`\x1b\[[0-9;?]*[a-zA-Z]`)
+
+// plain is the view as a person reads it, one entry per screen line.
+func plain(m tea.Model) []string {
+	return strings.Split(escapes.ReplaceAllString(view(m), ""), "\n")
+}
+
+// lineWith is the index of the first screen line containing s, or -1.
+func lineWith(lines []string, s string) int {
+	for i, l := range lines {
+		if strings.Contains(l, s) {
+			return i
+		}
+	}
+
+	return -1
+}
+
+// The picker is a popup beside the text, not a screen of its own.
+func TestPickerSitsUnderTheCursor(t *testing.T) {
+	m := started(t, fixed(notes, nil))
+
+	m, _ = press(m, "an earlier line", enter)
+	m, _ = press(m, "see [[")
+
+	lines := plain(m)
+
+	if lineWith(lines, "an earlier line") < 0 {
+		t.Errorf("the note is hidden while the picker is open:\n%s", strings.Join(lines, "\n"))
+	}
+
+	cursor := lineWith(lines, "see [[")
+	if cursor < 0 {
+		t.Fatalf("the line being typed is hidden:\n%s", strings.Join(lines, "\n"))
+	}
+
+	// One line for the popup's top border, then the best match.
+	first := lineWith(lines, "a second thought")
+	if first != cursor+2 {
+		t.Errorf("best match is on line %d, want %d, just under the cursor on %d:\n%s",
+			first, cursor+2, cursor, strings.Join(lines, "\n"))
+	}
+
+	if col, at := strings.Index(lines[first], "a second thought"), strings.Index(lines[cursor], "[["); col < at {
+		t.Errorf("popup starts at column %d, left of the brackets at %d", col, at)
+	}
+}
+
+// Near the bottom of the screen there is no room below, so the popup opens
+// upward instead of falling off the edge.
+func TestPickerFlipsAboveNearTheBottom(t *testing.T) {
+	m := started(t, fixed(notes, nil))
+
+	m, _ = press(m, strings.Repeat("\n", 18))
+	m, _ = press(m, "see [[")
+
+	lines := plain(m)
+	cursor := lineWith(lines, "see [[")
+	first := lineWith(lines, "a second thought")
+
+	if first < 0 || first >= cursor {
+		t.Errorf("best match is on line %d, want above the cursor on %d:\n%s",
+			first, cursor, strings.Join(lines, "\n"))
+	}
+}
+
+// Moving back past where the search started ends it, and enter goes back to
+// being a newline.
+func TestLeavingTheQueryClosesThePicker(t *testing.T) {
+	for name, keys := range map[string][]tea.KeyPressMsg{
+		"left past the brackets":      {left, left, left},
+		"backspace into the brackets": {bksp, bksp, bksp},
+	} {
+		t.Run(name, func(t *testing.T) {
+			m := started(t, fixed(notes, nil))
+
+			m, _ = press(m, "see [[ab", keys...)
+			m, _ = press(m, "", enter)
+
+			if got := body(m); !strings.Contains(got, "\n") {
+				t.Errorf("Body = %q, want enter to have inserted a newline", got)
+			}
+
+			if strings.Contains(body(m), "2026") {
+				t.Errorf("Body = %q, want no link inserted", body(m))
+			}
+		})
+	}
+}
+
+// Closing brackets typed by hand finish the link, so the picker gets out of
+// the way.
+func TestClosingBracketsCloseThePicker(t *testing.T) {
+	m := started(t, fixed(notes, nil))
+
+	m, _ = press(m, "[[mine]]", enter)
+
+	if got, want := body(m), "[[mine]]\n"; got != want {
+		t.Errorf("Body = %q, want %q", got, want)
+	}
+}
+
+// With nothing to pick, enter is a newline again.
+func TestEnterWithNoMatchIsANewline(t *testing.T) {
+	m := started(t, fixed(notes, nil))
+
+	m, _ = press(m, "[[zzzz", enter)
+
+	if got, want := body(m), "[[zzzz\n"; got != want {
 		t.Errorf("Body = %q, want %q", got, want)
 	}
 }
