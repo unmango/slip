@@ -7,8 +7,8 @@
 package tagv1alpha1
 
 import (
-	_ "github.com/UnstoppableMango/zettelkasten/gen/google/api"
-	v1 "github.com/UnstoppableMango/zettelkasten/gen/k8s.io/apimachinery/pkg/apis/meta/v1"
+	_ "github.com/unmango/slip/gen/google/api"
+	v1 "github.com/unmango/slip/gen/k8s.io/apimachinery/pkg/apis/meta/v1"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
@@ -463,8 +463,8 @@ const file_unmango_zettelkasten_tag_v1alpha1_tag_proto_rawDesc = "" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
 	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01:8\xeaA5\n" +
 	"\x1cunmango.zettelkasten.tag/Tag\x12\n" +
-	"tags/{tag}*\x04tags2\x03tagJ\x04\b\a\x10\bJ\x04\b2\x103J\x04\b3\x104B\xb4\x02\n" +
-	"%com.unmango.zettelkasten.tag.v1alpha1B\bTagProtoP\x01ZZgithub.com/UnstoppableMango/zettelkasten/gen/unmango/zettelkasten/tag/v1alpha1;tagv1alpha1\xa2\x02\x03UZT\xaa\x02!Unmango.Zettelkasten.Tag.V1alpha1\xca\x02!Unmango\\Zettelkasten\\Tag\\V1alpha1\xe2\x02-Unmango\\Zettelkasten\\Tag\\V1alpha1\\GPBMetadata\xea\x02$Unmango::Zettelkasten::Tag::V1alpha1b\beditionsp\xe9\a"
+	"tags/{tag}*\x04tags2\x03tagJ\x04\b\a\x10\bJ\x04\b2\x103J\x04\b3\x104B\xa3\x02\n" +
+	"%com.unmango.zettelkasten.tag.v1alpha1B\bTagProtoP\x01ZIgithub.com/unmango/slip/gen/unmango/zettelkasten/tag/v1alpha1;tagv1alpha1\xa2\x02\x03UZT\xaa\x02!Unmango.Zettelkasten.Tag.V1alpha1\xca\x02!Unmango\\Zettelkasten\\Tag\\V1alpha1\xe2\x02-Unmango\\Zettelkasten\\Tag\\V1alpha1\\GPBMetadata\xea\x02$Unmango::Zettelkasten::Tag::V1alpha1b\beditionsp\xe9\a"
 
 var file_unmango_zettelkasten_tag_v1alpha1_tag_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
 var file_unmango_zettelkasten_tag_v1alpha1_tag_proto_goTypes = []any{

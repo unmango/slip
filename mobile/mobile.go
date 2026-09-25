@@ -17,9 +17,9 @@ import (
 	"sync"
 	"time"
 
-	"github.com/UnstoppableMango/zettelkasten/internal/gitsync"
-	"github.com/UnstoppableMango/zettelkasten/internal/note"
-	"github.com/UnstoppableMango/zettelkasten/internal/store"
+	"github.com/unmango/slip/internal/gitsync"
+	"github.com/unmango/slip/internal/note"
+	"github.com/unmango/slip/internal/store"
 	"github.com/spf13/afero"
 )
 

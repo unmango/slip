@@ -51,7 +51,7 @@
 
   meta = {
     description = "Capture zettelkasten notes";
-    homepage = "https://github.com/UnstoppableMango/zettelkasten";
+    homepage = "https://github.com/unmango/slip";
     license = lib.licenses.mit;
     mainProgram = "slip";
   };

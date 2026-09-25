@@ -1,4 +1,4 @@
-module github.com/UnstoppableMango/zettelkasten
+module github.com/unmango/slip
 
 go 1.27
 

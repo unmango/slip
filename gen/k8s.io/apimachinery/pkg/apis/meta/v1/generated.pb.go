@@ -24,8 +24,8 @@
 package metav1
 
 import (
-	runtime "github.com/UnstoppableMango/zettelkasten/gen/k8s.io/apimachinery/pkg/runtime"
-	_ "github.com/UnstoppableMango/zettelkasten/gen/k8s.io/apimachinery/pkg/runtime/schema"
+	runtime "github.com/unmango/slip/gen/k8s.io/apimachinery/pkg/runtime"
+	_ "github.com/unmango/slip/gen/k8s.io/apimachinery/pkg/runtime/schema"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -4023,8 +4023,8 @@ const file_k8s_io_apimachinery_pkg_apis_meta_v1_generated_proto_rawDesc = "" +
 	"\n" +
 	"WatchEvent\x12\x12\n" +
 	"\x04type\x18\x01 \x01(\tR\x04type\x12E\n" +
-	"\x06object\x18\x02 \x01(\v2-.k8s.io.apimachinery.pkg.runtime.RawExtensionR\x06objectB\xcd\x02\n" +
-	"(com.k8s.io.apimachinery.pkg.apis.meta.v1B\x0eGeneratedProtoP\x01ZXgithub.com/UnstoppableMango/zettelkasten/gen/k8s.io/apimachinery/pkg/apis/meta/v1;metav1\xa2\x02\x06KIAPAM\xaa\x02$K8s.Io.Apimachinery.Pkg.Apis.Meta.V1\xca\x02$K8s\\Io\\Apimachinery\\Pkg\\Apis\\Meta\\V1\xe2\x020K8s\\Io\\Apimachinery\\Pkg\\Apis\\Meta\\V1\\GPBMetadata\xea\x02*K8s::Io::Apimachinery::Pkg::Apis::Meta::V1"
+	"\x06object\x18\x02 \x01(\v2-.k8s.io.apimachinery.pkg.runtime.RawExtensionR\x06objectB\xbc\x02\n" +
+	"(com.k8s.io.apimachinery.pkg.apis.meta.v1B\x0eGeneratedProtoP\x01ZGgithub.com/unmango/slip/gen/k8s.io/apimachinery/pkg/apis/meta/v1;metav1\xa2\x02\x06KIAPAM\xaa\x02$K8s.Io.Apimachinery.Pkg.Apis.Meta.V1\xca\x02$K8s\\Io\\Apimachinery\\Pkg\\Apis\\Meta\\V1\xe2\x020K8s\\Io\\Apimachinery\\Pkg\\Apis\\Meta\\V1\\GPBMetadata\xea\x02*K8s::Io::Apimachinery::Pkg::Apis::Meta::V1"
 
 var (
 	file_k8s_io_apimachinery_pkg_apis_meta_v1_generated_proto_rawDescOnce sync.Once

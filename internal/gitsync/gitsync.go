@@ -22,7 +22,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/UnstoppableMango/zettelkasten/internal/note"
+	"github.com/unmango/slip/internal/note"
 	"github.com/go-git/go-billy/v5"
 	billyutil "github.com/go-git/go-billy/v5/util"
 	"github.com/go-git/go-git/v5"

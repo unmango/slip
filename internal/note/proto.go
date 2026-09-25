@@ -1,8 +1,8 @@
 package note
 
 import (
-	refv1 "github.com/UnstoppableMango/zettelkasten/gen/unmango/ref/v1alpha1"
-	notev1 "github.com/UnstoppableMango/zettelkasten/gen/unmango/zettelkasten/note/v1alpha1"
+	refv1 "github.com/unmango/slip/gen/unmango/ref/v1alpha1"
+	notev1 "github.com/unmango/slip/gen/unmango/zettelkasten/note/v1alpha1"
 	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/types/known/timestamppb"
 )

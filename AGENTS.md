@@ -1,7 +1,7 @@
 # Agent instructions
 
 `slip` captures zettelkasten notes and passes anything else through to zk.
-The binary is `slip`; the module is `github.com/UnstoppableMango/zettelkasten`.
+The binary is `slip`; the module is `github.com/unmango/slip`.
 
 ## Layout
 

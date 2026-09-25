@@ -6,8 +6,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/UnstoppableMango/zettelkasten/internal/note"
-	"github.com/UnstoppableMango/zettelkasten/mobile"
+	"github.com/unmango/slip/internal/note"
+	"github.com/unmango/slip/mobile"
 	"github.com/go-git/go-git/v5"
 	"github.com/go-git/go-git/v5/plumbing"
 )

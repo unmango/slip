@@ -4,8 +4,8 @@ import (
 	"testing"
 	"time"
 
-	notev1 "github.com/UnstoppableMango/zettelkasten/gen/unmango/zettelkasten/note/v1alpha1"
-	"github.com/UnstoppableMango/zettelkasten/internal/note"
+	notev1 "github.com/unmango/slip/gen/unmango/zettelkasten/note/v1alpha1"
+	"github.com/unmango/slip/internal/note"
 )
 
 func TestTitleFrom(t *testing.T) {

@@ -7,8 +7,8 @@ package main
 import (
 	"os"
 
-	"github.com/UnstoppableMango/zettelkasten/internal/cli"
-	"github.com/UnstoppableMango/zettelkasten/internal/passthru"
+	"github.com/unmango/slip/internal/cli"
+	"github.com/unmango/slip/internal/passthru"
 	ucli "github.com/unmango/go/cli"
 )
 

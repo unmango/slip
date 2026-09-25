@@ -6,7 +6,7 @@ import (
 	"testing"
 
 	tea "charm.land/bubbletea/v2"
-	"github.com/UnstoppableMango/zettelkasten/internal/tui"
+	"github.com/unmango/slip/internal/tui"
 )
 
 // typed drives a model the way the runtime would: size it, type into it, then

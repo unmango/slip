@@ -11,12 +11,12 @@ import (
 	"time"
 
 	tea "charm.land/bubbletea/v2"
-	notev1 "github.com/UnstoppableMango/zettelkasten/gen/unmango/zettelkasten/note/v1alpha1"
-	"github.com/UnstoppableMango/zettelkasten/internal/config"
-	"github.com/UnstoppableMango/zettelkasten/internal/note"
-	"github.com/UnstoppableMango/zettelkasten/internal/store"
-	"github.com/UnstoppableMango/zettelkasten/internal/tui"
-	"github.com/UnstoppableMango/zettelkasten/internal/zk"
+	notev1 "github.com/unmango/slip/gen/unmango/zettelkasten/note/v1alpha1"
+	"github.com/unmango/slip/internal/config"
+	"github.com/unmango/slip/internal/note"
+	"github.com/unmango/slip/internal/store"
+	"github.com/unmango/slip/internal/tui"
+	"github.com/unmango/slip/internal/zk"
 	"github.com/spf13/afero"
 	"github.com/spf13/cobra"
 )

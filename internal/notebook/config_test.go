@@ -5,7 +5,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/UnstoppableMango/zettelkasten/internal/notebook"
+	"github.com/unmango/slip/internal/notebook"
 	"github.com/spf13/afero"
 )
 

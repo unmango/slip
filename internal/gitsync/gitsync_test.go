@@ -7,9 +7,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/UnstoppableMango/zettelkasten/internal/gitsync"
-	"github.com/UnstoppableMango/zettelkasten/internal/note"
-	"github.com/UnstoppableMango/zettelkasten/internal/store"
+	"github.com/unmango/slip/internal/gitsync"
+	"github.com/unmango/slip/internal/note"
+	"github.com/unmango/slip/internal/store"
 	"github.com/go-git/go-git/v5"
 	"github.com/go-git/go-git/v5/plumbing"
 	"github.com/go-git/go-git/v5/plumbing/object"

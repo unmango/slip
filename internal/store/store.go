@@ -7,7 +7,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/UnstoppableMango/zettelkasten/internal/note"
+	"github.com/unmango/slip/internal/note"
 	"github.com/spf13/afero"
 )
 

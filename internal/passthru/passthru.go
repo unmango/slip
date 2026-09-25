@@ -10,7 +10,7 @@ import (
 	"slices"
 	"strings"
 
-	"github.com/UnstoppableMango/zettelkasten/internal/cli"
+	"github.com/unmango/slip/internal/cli"
 )
 
 // Binary is the command unowned invocations are handed to.

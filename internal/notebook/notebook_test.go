@@ -3,7 +3,7 @@ package notebook_test
 import (
 	"testing"
 
-	"github.com/UnstoppableMango/zettelkasten/internal/notebook"
+	"github.com/unmango/slip/internal/notebook"
 	"github.com/spf13/afero"
 )
 

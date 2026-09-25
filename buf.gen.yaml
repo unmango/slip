@@ -12,7 +12,7 @@ managed:
   enabled: true
   override:
     - file_option: go_package_prefix
-      value: github.com/UnstoppableMango/zettelkasten/gen
+      value: github.com/unmango/slip/gen
 
 plugins:
   - local: protoc-gen-go

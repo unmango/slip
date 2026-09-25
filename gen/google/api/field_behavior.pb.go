@@ -194,8 +194,8 @@ const file_google_api_field_behavior_proto_rawDesc = "" +
 	"\x11NON_EMPTY_DEFAULT\x10\a\x12\x0e\n" +
 	"\n" +
 	"IDENTIFIER\x10\b:d\n" +
-	"\x0efield_behavior\x12\x1d.google.protobuf.FieldOptions\x18\x9c\b \x03(\x0e2\x19.google.api.FieldBehaviorB\x02\x10\x00R\rfieldBehaviorB\xa6\x01\n" +
-	"\x0ecom.google.apiB\x12FieldBehaviorProtoP\x01Z7github.com/UnstoppableMango/zettelkasten/gen/google/api\xa2\x02\x03GAX\xaa\x02\n" +
+	"\x0efield_behavior\x12\x1d.google.protobuf.FieldOptions\x18\x9c\b \x03(\x0e2\x19.google.api.FieldBehaviorB\x02\x10\x00R\rfieldBehaviorB\x95\x01\n" +
+	"\x0ecom.google.apiB\x12FieldBehaviorProtoP\x01Z&github.com/unmango/slip/gen/google/api\xa2\x02\x03GAX\xaa\x02\n" +
 	"Google.Api\xca\x02\n" +
 	"Google\\Api\xe2\x02\x16Google\\Api\\GPBMetadata\xea\x02\vGoogle::Apib\x06proto3"
 

@@ -41,8 +41,8 @@ var File_k8s_io_apimachinery_pkg_runtime_schema_generated_proto protoreflect.Fil
 
 const file_k8s_io_apimachinery_pkg_runtime_schema_generated_proto_rawDesc = "" +
 	"\n" +
-	"6k8s.io/apimachinery/pkg/runtime/schema/generated.proto\x12&k8s.io.apimachinery.pkg.runtime.schemaB\xd1\x02\n" +
-	"*com.k8s.io.apimachinery.pkg.runtime.schemaB\x0eGeneratedProtoP\x01ZSgithub.com/UnstoppableMango/zettelkasten/gen/k8s.io/apimachinery/pkg/runtime/schema\xa2\x02\x06KIAPRS\xaa\x02&K8s.Io.Apimachinery.Pkg.Runtime.Schema\xca\x02&K8s\\Io\\Apimachinery\\Pkg\\Runtime\\Schema\xe2\x022K8s\\Io\\Apimachinery\\Pkg\\Runtime\\Schema\\GPBMetadata\xea\x02+K8s::Io::Apimachinery::Pkg::Runtime::Schema"
+	"6k8s.io/apimachinery/pkg/runtime/schema/generated.proto\x12&k8s.io.apimachinery.pkg.runtime.schemaB\xc0\x02\n" +
+	"*com.k8s.io.apimachinery.pkg.runtime.schemaB\x0eGeneratedProtoP\x01ZBgithub.com/unmango/slip/gen/k8s.io/apimachinery/pkg/runtime/schema\xa2\x02\x06KIAPRS\xaa\x02&K8s.Io.Apimachinery.Pkg.Runtime.Schema\xca\x02&K8s\\Io\\Apimachinery\\Pkg\\Runtime\\Schema\xe2\x022K8s\\Io\\Apimachinery\\Pkg\\Runtime\\Schema\\GPBMetadata\xea\x02+K8s::Io::Apimachinery::Pkg::Runtime::Schema"
 
 var file_k8s_io_apimachinery_pkg_runtime_schema_generated_proto_goTypes = []any{}
 var file_k8s_io_apimachinery_pkg_runtime_schema_generated_proto_depIdxs = []int32{
