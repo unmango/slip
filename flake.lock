@@ -189,11 +189,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1789768065,
-        "narHash": "sha256-4eHTpIvBIhj+eQhJb6j4q9XWzeF3ceFbtSLV9m32zSA=",
+        "lastModified": 1789965534,
+        "narHash": "sha256-cvcE0c8XUs4kL+xv6inD7qJg+2ET5nBdogj0ovdHV8w=",
         "owner": "unmango",
         "repo": "pkgs",
-        "rev": "3552d8f85dfa4d4cd7f2965d9f4aac183c0a5f9a",
+        "rev": "8de8883662830865bbc467e25816d0c14284130a",
         "type": "github"
       },
       "original": {
@@ -225,11 +225,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1789684949,
-        "narHash": "sha256-ZKhUe/2IJUq1JhKxKMu8rbkgSGmPP2ZCqlIPn40aGCM=",
+        "lastModified": 1789785513,
+        "narHash": "sha256-B44WL6h0XoLjJ41bUPJk0X5SDinLCII//6EcBLXKiJ0=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "e554fab72f81915600f3f449b786fd9af40439a5",
+        "rev": "20b1ddd1aa5ace70c9468305030aa4f9ef79671b",
         "type": "github"
       },
       "original": {
