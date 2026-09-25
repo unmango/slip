@@ -1,5 +1,7 @@
 # zettelkasten
 
+[![Hercules CI](https://hercules-ci.com/api/v1/site/github/account/UnstoppableMango/project/zettelkasten/badge)](https://hercules-ci.com/github/UnstoppableMango/zettelkasten)
+
 `slip` captures a thought into a zettel with as little ceremony as possible, then writes it as markdown a machine can read.
 
 A zettelkasten is a slip box, so the tool is a slip.
