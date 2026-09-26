@@ -5,8 +5,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/unmango/slip/internal/notebook"
 	"github.com/spf13/afero"
+	"github.com/unmango/slip/internal/notebook"
 )
 
 func TestInspectConfig(t *testing.T) {

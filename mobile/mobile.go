@@ -17,10 +17,10 @@ import (
 	"sync"
 	"time"
 
+	"github.com/spf13/afero"
 	"github.com/unmango/slip/internal/gitsync"
 	"github.com/unmango/slip/internal/note"
 	"github.com/unmango/slip/internal/store"
-	"github.com/spf13/afero"
 )
 
 // syncTimeout bounds a publish. A phone that has wandered onto a captive

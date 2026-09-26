@@ -6,9 +6,9 @@ import (
 	"testing"
 	"time"
 
+	"github.com/spf13/afero"
 	"github.com/unmango/slip/internal/note"
 	"github.com/unmango/slip/internal/store"
-	"github.com/spf13/afero"
 )
 
 var now = time.Date(2026, 9, 8, 14, 12, 33, 0, time.UTC)
