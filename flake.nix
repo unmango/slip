@@ -46,20 +46,20 @@
           ...
         }:
         {
-          packages.default = self'.packages.slip;
-          packages.slip = pkgs.callPackage ./nix/package.nix { };
+          packages = {
+            default = self'.packages.slip;
+            slip = pkgs.callPackage ./nix/package.nix { };
 
-          # An attribute path cannot apply `.override`, so the zk-free build
-          # needs an output of its own to be reachable from `nix build`.
-          packages.slip-standalone = self'.packages.slip.override { withZk = false; };
+            slip-standalone = self'.packages.slip.override {
+              withZk = false;
+            };
 
-          packages.generated = pkgs.callPackage ./nix/generated.nix {
-            apisWorkspace = inputs'.apis.legacyPackages.unmangoApis.workspace;
-            bufLib = inputs'.a2b.legacyPackages.lib.buf;
-          };
-
-          packages.generate = pkgs.callPackage ./nix/generate.nix {
-            inherit (self'.packages) generated;
+            generate = pkgs.callPackage ./nix/generate.nix {
+              generated = pkgs.callPackage ./nix/generated.nix {
+                apisWorkspace = inputs'.apis.legacyPackages.unmangoApis.workspace;
+                bufLib = inputs'.a2b.legacyPackages.lib.buf;
+              };
+            };
           };
 
           apps.generate = {
@@ -90,8 +90,6 @@
             ];
           };
 
-          # The Android SDK and NDK are unfree, and the SDK carries a licence
-          # that has to be accepted before it will evaluate
           devShells.android =
             let
               pkgs = import inputs.nixpkgs {
@@ -120,11 +118,6 @@
             zizmor.enable = true;
           };
 
-          # Generated protobuf code is checked in verbatim. Formatting it would
-          # put every regeneration permanently at odds with the generator.
-          # Golden files are compared byte for byte, and a note is markdown whose
-          # frontmatter fences mdformat reads as headings. Formatting either
-          # tree rewrites the thing under test.
           treefmt.settings.global.excludes = [
             "gen/**"
             "**/testdata/**"
