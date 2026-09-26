@@ -64,9 +64,7 @@
           "flake-parts"
         ],
         "googleapis": "googleapis",
-        "mangopkgs": [
-          "mangopkgs"
-        ],
+        "mangopkgs": "mangopkgs",
         "nixpkgs": [
           "nixpkgs"
         ],
@@ -114,6 +112,7 @@
     "flake-utils": {
       "inputs": {
         "systems": [
+          "apis",
           "mangopkgs",
           "systems"
         ]
@@ -136,6 +135,7 @@
       "inputs": {
         "flake-utils": "flake-utils",
         "nixpkgs": [
+          "apis",
           "mangopkgs",
           "nixpkgs"
         ]
@@ -174,26 +174,30 @@
     "mangopkgs": {
       "inputs": {
         "flake-parts": [
+          "apis",
           "flake-parts"
         ],
         "gomod2nix": "gomod2nix",
         "nix2container": "nix2container",
         "nixpkgs": [
+          "apis",
           "nixpkgs"
         ],
         "systems": [
+          "apis",
           "systems"
         ],
         "treefmt-nix": [
+          "apis",
           "treefmt-nix"
         ]
       },
       "locked": {
-        "lastModified": 1789965534,
-        "narHash": "sha256-cvcE0c8XUs4kL+xv6inD7qJg+2ET5nBdogj0ovdHV8w=",
+        "lastModified": 1790254924,
+        "narHash": "sha256-vZEe4uEtQNtg8uixnY7WGm/+nr4zOVYHRJTK3HJfl2M=",
         "owner": "unmango",
         "repo": "pkgs",
-        "rev": "8de8883662830865bbc467e25816d0c14284130a",
+        "rev": "1474fac55a82a58af93e23efd01364bd9034eb22",
         "type": "github"
       },
       "original": {
@@ -205,6 +209,7 @@
     "nix2container": {
       "inputs": {
         "nixpkgs": [
+          "apis",
           "mangopkgs",
           "nixpkgs"
         ]
@@ -326,7 +331,6 @@
         ],
         "apis": "apis",
         "flake-parts": "flake-parts",
-        "mangopkgs": "mangopkgs",
         "nixpkgs": "nixpkgs",
         "systems": "systems",
         "treefmt-nix": "treefmt-nix"

@@ -16,8 +16,6 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          # Nothing downstream runs an authenticated git command, and these
-          # steps evaluate code from the pull request.
           persist-credentials: false
 
       - uses: unmango/actions/setup-nix@3ec4ed5a6af9c00f6a39e079df488573c77ebda6 # v1.0.1
@@ -27,15 +25,11 @@ jobs:
       - run: nix flake check
       - run: nix build .#
 
-  # gen/ is committed but generated from the pinned apis input. Without this,
-  # bumping that input leaves the checked-in code silently behind it.
-  generate-drift:
+  drift:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          # Nothing downstream runs an authenticated git command, and these
-          # steps evaluate code from the pull request.
           persist-credentials: false
 
       - uses: unmango/actions/setup-nix@3ec4ed5a6af9c00f6a39e079df488573c77ebda6 # v1.0.1
@@ -44,8 +38,6 @@ jobs:
 
       - run: nix run .#generate
 
-      # `git diff` alone would ignore an added binding, since generate rewrites
-      # the whole directory and a new file lands untracked.
       - name: Check gen/ is up to date
         run: |
           if [ -n "$(git status --porcelain -- gen)" ]; then

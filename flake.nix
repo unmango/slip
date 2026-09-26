@@ -1,5 +1,5 @@
 {
-  description = "A Nix flake";
+  description = "A zk wrapper and Zettelkasten tool suite";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
@@ -20,24 +20,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.systems.follows = "systems";
       inputs.flake-parts.follows = "flake-parts";
-      inputs.mangopkgs.follows = "mangopkgs";
       inputs.treefmt-nix.follows = "treefmt-nix";
     };
 
-    # apis hoists this from a2b for the same reason it is hoisted again here:
-    # nothing in this flake evaluates mangopkgs, but a consumer that cannot
-    # reach it with one `follows` locks a second copy of it, and with it a
-    # second gomod2nix, flake-utils, and nix2container.
-    mangopkgs = {
-      url = "github:unmango/pkgs";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.systems.follows = "systems";
-      inputs.flake-parts.follows = "flake-parts";
-      inputs.treefmt-nix.follows = "treefmt-nix";
-    };
-
-    # apis already depends on a2b for the same buf library. Following its node
-    # keeps one a2b, and its pulumi closure, in the lock rather than two.
     a2b.follows = "apis/a2b";
   };
 
@@ -45,9 +30,10 @@
     inputs@{ flake-parts, ... }:
     flake-parts.lib.mkFlake { inherit inputs; } {
       systems = import inputs.systems;
-      imports = [
-        inputs.systems.flakeModule
-        inputs.treefmt-nix.flakeModule
+
+      imports = with inputs; [
+        systems.flakeModule
+        treefmt-nix.flakeModule
       ];
 
       perSystem =
@@ -55,6 +41,7 @@
           self',
           inputs',
           pkgs,
+          lib,
           system,
           ...
         }:
@@ -74,17 +61,12 @@
           packages.generate = pkgs.callPackage ./nix/generate.nix {
             inherit (self'.packages) generated;
           };
-          apps.generate.program = self'.packages.generate;
 
-          # gen/ is checked in, so it can fall behind the pinned apis input.
-          # This is the only thing that notices.
-          checks.generate = pkgs.runCommand "check-generate" { } ''
-            diff -ruN ${self'.packages.generated}/gen ${./gen}
-            touch "$out"
-          '';
+          apps.generate = {
+            program = lib.getExe self'.packages.generate;
+            meta.description = "Codegen";
+          };
 
-          # buildGoModule already runs `go test ./...`; this adds vet and the
-          # race detector on top of it.
           checks.vet = self'.packages.slip.overrideAttrs {
             checkPhase = ''
               runHook preCheck
@@ -104,13 +86,12 @@
               gotools
               nix-update
               nixfmt
+              watchexec
             ];
           };
 
           # The Android SDK and NDK are unfree, and the SDK carries a licence
-          # that has to be accepted before it will evaluate at all. Confining
-          # both to a nixpkgs of their own keeps every other output, and
-          # anything a consumer builds from this flake, on the default config.
+          # that has to be accepted before it will evaluate
           devShells.android =
             let
               pkgs = import inputs.nixpkgs {
@@ -135,6 +116,8 @@
               enable = true;
               settings.document-start = "disable";
             };
+
+            zizmor.enable = true;
           };
 
           # Generated protobuf code is checked in verbatim. Formatting it would
