@@ -5,9 +5,9 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/UnstoppableMango/zettelkasten/internal/notebook"
 	"github.com/spf13/afero"
 	"github.com/spf13/cobra"
+	"github.com/unmango/slip/internal/notebook"
 )
 
 func newInit() *cobra.Command {

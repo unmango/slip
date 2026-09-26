@@ -7,7 +7,7 @@ import (
 	"testing"
 
 	tea "charm.land/bubbletea/v2"
-	"github.com/UnstoppableMango/zettelkasten/internal/tui"
+	"github.com/unmango/slip/internal/tui"
 )
 
 var notes = []tui.Link{

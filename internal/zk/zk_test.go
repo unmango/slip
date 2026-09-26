@@ -9,7 +9,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/UnstoppableMango/zettelkasten/internal/zk"
+	"github.com/unmango/slip/internal/zk"
 )
 
 // The fixture is real output from `zk list --format jsonl` over notes slip

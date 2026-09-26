@@ -1,6 +1,6 @@
-# zettelkasten
+# slip
 
-[![Hercules CI](https://hercules-ci.com/api/v1/site/github/account/UnstoppableMango/project/zettelkasten/badge)](https://hercules-ci.com/github/UnstoppableMango/zettelkasten)
+[![Hercules CI](https://hercules-ci.com/api/v1/site/github/account/unmango/project/slip/badge)](https://hercules-ci.com/github/unmango/slip)
 
 `slip` captures a thought into a zettel with as little ceremony as possible, then writes it as markdown a machine can read.
 
@@ -12,7 +12,7 @@ Reading, linking, and searching are handled by [zk](https://github.com/zk-org/zk
 ## Install
 
 ```sh
-nix run github:UnstoppableMango/zettelkasten
+nix run github:unmango/slip
 ```
 
 The packaged binary carries `zk` on its `PATH`.

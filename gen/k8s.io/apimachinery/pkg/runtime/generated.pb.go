@@ -306,8 +306,8 @@ const file_k8s_io_apimachinery_pkg_runtime_generated_proto_rawDesc = "" +
 	"\btypeMeta\x18\x01 \x01(\v2).k8s.io.apimachinery.pkg.runtime.TypeMetaR\btypeMeta\x12\x10\n" +
 	"\x03raw\x18\x02 \x01(\fR\x03raw\x12(\n" +
 	"\x0fcontentEncoding\x18\x03 \x01(\tR\x0fcontentEncoding\x12 \n" +
-	"\vcontentType\x18\x04 \x01(\tR\vcontentTypeB\xa5\x02\n" +
-	"#com.k8s.io.apimachinery.pkg.runtimeB\x0eGeneratedProtoP\x01ZLgithub.com/UnstoppableMango/zettelkasten/gen/k8s.io/apimachinery/pkg/runtime\xa2\x02\x05KIAPR\xaa\x02\x1fK8s.Io.Apimachinery.Pkg.Runtime\xca\x02\x1fK8s\\Io\\Apimachinery\\Pkg\\Runtime\xe2\x02+K8s\\Io\\Apimachinery\\Pkg\\Runtime\\GPBMetadata\xea\x02#K8s::Io::Apimachinery::Pkg::Runtime"
+	"\vcontentType\x18\x04 \x01(\tR\vcontentTypeB\x94\x02\n" +
+	"#com.k8s.io.apimachinery.pkg.runtimeB\x0eGeneratedProtoP\x01Z;github.com/unmango/slip/gen/k8s.io/apimachinery/pkg/runtime\xa2\x02\x05KIAPR\xaa\x02\x1fK8s.Io.Apimachinery.Pkg.Runtime\xca\x02\x1fK8s\\Io\\Apimachinery\\Pkg\\Runtime\xe2\x02+K8s\\Io\\Apimachinery\\Pkg\\Runtime\\GPBMetadata\xea\x02#K8s::Io::Apimachinery::Pkg::Runtime"
 
 var (
 	file_k8s_io_apimachinery_pkg_runtime_generated_proto_rawDescOnce sync.Once

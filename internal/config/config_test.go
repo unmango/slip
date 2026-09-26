@@ -4,9 +4,9 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/UnstoppableMango/zettelkasten/internal/config"
-	"github.com/UnstoppableMango/zettelkasten/internal/notebook"
 	"github.com/spf13/afero"
+	"github.com/unmango/slip/internal/config"
+	"github.com/unmango/slip/internal/notebook"
 )
 
 func TestResolvePrecedence(t *testing.T) {

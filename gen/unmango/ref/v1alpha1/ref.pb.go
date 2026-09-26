@@ -7,7 +7,7 @@
 package refv1alpha1
 
 import (
-	_ "github.com/UnstoppableMango/zettelkasten/gen/google/api"
+	_ "github.com/unmango/slip/gen/google/api"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -480,8 +480,8 @@ const file_unmango_ref_v1alpha1_ref_proto_rawDesc = "" +
 	"\x1eDELETE_PROPAGATION_UNSPECIFIED\x10\x00\x12!\n" +
 	"\x1dDELETE_PROPAGATION_FOREGROUND\x10\x01\x12!\n" +
 	"\x1dDELETE_PROPAGATION_BACKGROUND\x10\x02\x12\x1d\n" +
-	"\x19DELETE_PROPAGATION_ORPHAN\x10\x03B\xe5\x01\n" +
-	"\x18com.unmango.ref.v1alpha1B\bRefProtoP\x01ZMgithub.com/UnstoppableMango/zettelkasten/gen/unmango/ref/v1alpha1;refv1alpha1\xa2\x02\x03URX\xaa\x02\x14Unmango.Ref.V1alpha1\xca\x02\x14Unmango\\Ref\\V1alpha1\xe2\x02 Unmango\\Ref\\V1alpha1\\GPBMetadata\xea\x02\x16Unmango::Ref::V1alpha1b\beditionsp\xe9\a"
+	"\x19DELETE_PROPAGATION_ORPHAN\x10\x03B\xd4\x01\n" +
+	"\x18com.unmango.ref.v1alpha1B\bRefProtoP\x01Z<github.com/unmango/slip/gen/unmango/ref/v1alpha1;refv1alpha1\xa2\x02\x03URX\xaa\x02\x14Unmango.Ref.V1alpha1\xca\x02\x14Unmango\\Ref\\V1alpha1\xe2\x02 Unmango\\Ref\\V1alpha1\\GPBMetadata\xea\x02\x16Unmango::Ref::V1alpha1b\beditionsp\xe9\a"
 
 var file_unmango_ref_v1alpha1_ref_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
 var file_unmango_ref_v1alpha1_ref_proto_msgTypes = make([]protoimpl.MessageInfo, 2)

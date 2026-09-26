@@ -7,9 +7,9 @@
 package notev1alpha1
 
 import (
-	_ "github.com/UnstoppableMango/zettelkasten/gen/google/api"
-	v1 "github.com/UnstoppableMango/zettelkasten/gen/k8s.io/apimachinery/pkg/apis/meta/v1"
-	v1alpha1 "github.com/UnstoppableMango/zettelkasten/gen/unmango/ref/v1alpha1"
+	_ "github.com/unmango/slip/gen/google/api"
+	v1 "github.com/unmango/slip/gen/k8s.io/apimachinery/pkg/apis/meta/v1"
+	v1alpha1 "github.com/unmango/slip/gen/unmango/ref/v1alpha1"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
@@ -1528,8 +1528,8 @@ const file_unmango_zettelkasten_note_v1alpha1_note_proto_rawDesc = "" +
 	"\x18LINK_RELATION_ELABORATES\x10\x05\x12\x1c\n" +
 	"\x18LINK_RELATION_REFERENCES\x10\x06\x12\x1c\n" +
 	"\x18LINK_RELATION_SUPERSEDES\x10\a\x12\x17\n" +
-	"\x13LINK_RELATION_OTHER\x10\bB\xbc\x02\n" +
-	"&com.unmango.zettelkasten.note.v1alpha1B\tNoteProtoP\x01Z\\github.com/UnstoppableMango/zettelkasten/gen/unmango/zettelkasten/note/v1alpha1;notev1alpha1\xa2\x02\x03UZN\xaa\x02\"Unmango.Zettelkasten.Note.V1alpha1\xca\x02\"Unmango\\Zettelkasten\\Note\\V1alpha1\xe2\x02.Unmango\\Zettelkasten\\Note\\V1alpha1\\GPBMetadata\xea\x02%Unmango::Zettelkasten::Note::V1alpha1b\beditionsp\xe9\a"
+	"\x13LINK_RELATION_OTHER\x10\bB\xab\x02\n" +
+	"&com.unmango.zettelkasten.note.v1alpha1B\tNoteProtoP\x01ZKgithub.com/unmango/slip/gen/unmango/zettelkasten/note/v1alpha1;notev1alpha1\xa2\x02\x03UZN\xaa\x02\"Unmango.Zettelkasten.Note.V1alpha1\xca\x02\"Unmango\\Zettelkasten\\Note\\V1alpha1\xe2\x02.Unmango\\Zettelkasten\\Note\\V1alpha1\\GPBMetadata\xea\x02%Unmango::Zettelkasten::Note::V1alpha1b\beditionsp\xe9\a"
 
 var file_unmango_zettelkasten_note_v1alpha1_note_proto_enumTypes = make([]protoimpl.EnumInfo, 3)
 var file_unmango_zettelkasten_note_v1alpha1_note_proto_msgTypes = make([]protoimpl.MessageInfo, 6)

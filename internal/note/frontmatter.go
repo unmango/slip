@@ -6,7 +6,7 @@ import (
 	"strings"
 	"time"
 
-	notev1 "github.com/UnstoppableMango/zettelkasten/gen/unmango/zettelkasten/note/v1alpha1"
+	notev1 "github.com/unmango/slip/gen/unmango/zettelkasten/note/v1alpha1"
 	"gopkg.in/yaml.v3"
 )
 

@@ -7,8 +7,8 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/UnstoppableMango/zettelkasten/internal/note"
 	"github.com/spf13/afero"
+	"github.com/unmango/slip/internal/note"
 )
 
 // ext is the file extension zk indexes by default.

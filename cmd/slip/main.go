@@ -7,9 +7,9 @@ package main
 import (
 	"os"
 
-	"github.com/UnstoppableMango/zettelkasten/internal/cli"
-	"github.com/UnstoppableMango/zettelkasten/internal/passthru"
 	ucli "github.com/unmango/go/cli"
+	"github.com/unmango/slip/internal/cli"
+	"github.com/unmango/slip/internal/passthru"
 )
 
 // version is set at build time via -ldflags.

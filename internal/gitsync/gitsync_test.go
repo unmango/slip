@@ -7,13 +7,13 @@ import (
 	"testing"
 	"time"
 
-	"github.com/UnstoppableMango/zettelkasten/internal/gitsync"
-	"github.com/UnstoppableMango/zettelkasten/internal/note"
-	"github.com/UnstoppableMango/zettelkasten/internal/store"
 	"github.com/go-git/go-git/v5"
 	"github.com/go-git/go-git/v5/plumbing"
 	"github.com/go-git/go-git/v5/plumbing/object"
 	"github.com/spf13/afero"
+	"github.com/unmango/slip/internal/gitsync"
+	"github.com/unmango/slip/internal/note"
+	"github.com/unmango/slip/internal/store"
 )
 
 var now = time.Date(2026, 9, 8, 14, 12, 33, 0, time.UTC)

@@ -4,7 +4,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/UnstoppableMango/zettelkasten/internal/passthru"
+	"github.com/unmango/slip/internal/passthru"
 )
 
 func TestOwns(t *testing.T) {

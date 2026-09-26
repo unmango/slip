@@ -28,7 +28,7 @@
     ];
   };
 
-  vendorHash = "sha256-pX7USvYdO6R7P/gKJJW93RVnl61URuHwaAuZ1zzEFoc=";
+  vendorHash = "sha256-cA/JXLCpTC+Hm3NwYSj3aCCnrkdnOm0VFbrllA5JBQ8=";
 
   subPackages = [ "cmd/slip" ];
 
@@ -51,7 +51,7 @@
 
   meta = {
     description = "Capture zettelkasten notes";
-    homepage = "https://github.com/UnstoppableMango/zettelkasten";
+    homepage = "https://github.com/unmango/slip";
     license = lib.licenses.mit;
     mainProgram = "slip";
   };

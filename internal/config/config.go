@@ -6,8 +6,8 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/UnstoppableMango/zettelkasten/internal/notebook"
 	"github.com/spf13/afero"
+	"github.com/unmango/slip/internal/notebook"
 )
 
 // EnvDir points slip at a notes directory directly.

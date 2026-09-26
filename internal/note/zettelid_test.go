@@ -4,7 +4,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/UnstoppableMango/zettelkasten/internal/note"
+	"github.com/unmango/slip/internal/note"
 )
 
 func TestZettelID(t *testing.T) {
