@@ -45,6 +45,15 @@
           system,
           ...
         }:
+        let
+          androidPkgs = import inputs.nixpkgs {
+            inherit system;
+            config = {
+              allowUnfree = true;
+              android_sdk.accept_license = true;
+            };
+          };
+        in
         {
           packages = {
             default = self'.packages.slip;
@@ -90,19 +99,9 @@
             ];
           };
 
-          devShells.android =
-            let
-              pkgs = import inputs.nixpkgs {
-                inherit system;
-                config = {
-                  allowUnfree = true;
-                  android_sdk.accept_license = true;
-                };
-              };
-            in
-            pkgs.callPackage ./nix/shells/android.nix {
-              inputsFrom = [ self'.devShells.default ];
-            };
+          devShells.android = androidPkgs.callPackage ./nix/shells/android.nix {
+            inputsFrom = [ self'.devShells.default ];
+          };
 
           treefmt.programs = {
             actionlint.enable = true;
