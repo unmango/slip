@@ -1,0 +1,52 @@
+name: Nix hashes
+
+# Renovate bumps go.mod and go.sum but cannot recompute vendorHash, so its PRs
+# fail the build until someone copies the new hash in. This job does that copy.
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  update:
+    if: >-
+      github.event.pull_request.user.login == 'thecluster-bot[bot]' &&
+      github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.head_ref }}
+          persist-credentials: false
+
+      - uses: unmango/actions/setup-nix@56abf92ca6c8e241831118a76b7b2ce1d3b8d414 # v1.1.1
+        with:
+          github_access_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - run: nix develop -c make gomod
+
+      - id: diff
+        run: git diff --quiet || echo "changed=true" >> "$GITHUB_OUTPUT"
+
+      # Minted after nix-update has evaluated the PR's code, so that code never
+      # runs with a token that can push.
+      - if: steps.diff.outputs.changed
+        id: app-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
+        with:
+          client-id: ${{ vars.RELEASE_APP_CLIENT_ID }}
+          private-key: ${{ secrets.RELEASE_APP_PRIVATE_KEY }}
+
+      # A push with GITHUB_TOKEN would not start a new CI run, so the fixed
+      # commit would never be checked.
+      - if: steps.diff.outputs.changed
+        env:
+          TOKEN: ${{ steps.app-token.outputs.token }}
+          BRANCH: ${{ github.head_ref }}
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -am 'fix(nix): update hashes'
+          git push "https://x-access-token:${TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "HEAD:${BRANCH}"
