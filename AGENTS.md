@@ -50,7 +50,7 @@ The binary is `slip`; the module is `github.com/unmango/slip`.
 
 **treefmt excludes `gen/**` and `**/testdata/**`.** Both exclusions are load-bearing. gofumpt would rewrite generated files into permanent `make generate` drift, and mdformat reads a note's `---` frontmatter fences as markdown headings and rewrites golden files into garbage.
 
-**Adding or removing a Go dependency requires `make gomod`.** Otherwise `nix build` fails. Note the failure is sometimes an "inconsistent vendoring" error rather than a hash mismatch, because nix reuses the cached vendor directory keyed by the stale hash.
+**Adding or removing a Go dependency requires `make gomod`.** Otherwise `nix build` fails. On Renovate PRs, `.github/workflows/nix-hashes.yml` runs it and pushes the result. Note the failure is sometimes an "inconsistent vendoring" error rather than a hash mismatch, because nix reuses the cached vendor directory keyed by the stale hash.
 
 **Global protobuf registry hazard.** Adding `google.golang.org/genproto/googleapis/api/annotations` or `k8s.io/api` as a dependency panics at init with "file already registered", because `gen/` registers those descriptors itself. Registry keys are proto file paths, so our own `go_package_prefix` does not avoid it. Init-time panic, no compile-time warning.
 
