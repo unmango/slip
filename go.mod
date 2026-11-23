@@ -11,7 +11,7 @@ require (
 	github.com/sahilm/fuzzy v0.1.3
 	github.com/spf13/afero v1.15.0
 	github.com/spf13/cobra v1.10.2
-	github.com/spf13/pflag v1.0.10
+	github.com/spf13/pflag v1.1.0
 	github.com/unmango/go v0.16.6
 	golang.org/x/mobile v0.0.0-20260908204917-8b95e45f8d3e
 	google.golang.org/protobuf v1.36.12
